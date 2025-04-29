@@ -42,6 +42,9 @@ Here is the file structure:
 
 1. Get Data in the form required OR Clone the repository
 
+```bash
+    git clone https://github.com/sg782/505_final
+```
 
 2. Install Python Requirements
 ```bash
