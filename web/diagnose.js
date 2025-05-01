@@ -11,11 +11,13 @@ function previewImage() {
 
     uploadedFile = file; // Save for later
 
+    // handle the image on load
     const reader = new FileReader();
     reader.onload = function(event) {
         document.getElementById('uploaded-img').src = event.target.result;
         document.getElementById('uploaded-img').style.display = "";
 
+        // stuff to make it show up in the User interface
         const img = new Image();
         img.onload = function() {
             const canvas = document.getElementById('imageCanvas');
@@ -33,6 +35,12 @@ function previewImage() {
 }
 
 function processImage() {
+    /*
+        To process the image,
+        we must save the file to the server
+        In our case, the server is our local machine
+        We then store the path to this file for future processing
+    */
     if (!uploadedFile) {
         alert('Please upload an image first!');
         return;

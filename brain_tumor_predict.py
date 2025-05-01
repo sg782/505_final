@@ -53,9 +53,10 @@ def get_llm_rec(json_data):
     # Use of Generative AI
     # (Bonus Points)
 
+    ## BE SURE that you have your own API key if you would like generative reommendations
+    # We removed our own due to privacy reasons. 
     key = "put your key here and comment the next line" 
     key = "hiding_key_for_submission"
-
     
     if(key == "hiding_key_for_submission"):
         return("API Key removed for submission for privacy reasons. The Safe bet is to go to a doctor!")
@@ -63,24 +64,19 @@ def get_llm_rec(json_data):
     client = OpenAI(
         api_key=key
     )
-    # Format the prompt
-    prompt = f"""Here are the classification results for an MRI image of a brain tumor:
-    {json.dumps(json_data, indent=2)}
-    Based on this, recommend a course of action in simple language. Keep the Response within a few sentences."""
-
-    # Call the model
+    # Format the prompt and call the model
     response = client.responses.create(
         model="gpt-3.5-turbo", 
         instructions = "Here are the classification results for an MRI image of a brain tumor. Based on this, recommend a course of action in simple language. Keep the Response within a few sentences.",
         input = json.dumps(json_data, indent=2)
     )
 
-
     return(response.output_text)
     
 
-
 if __name__ == "__main__":
+
+    # to run the system from the command line
 
     if len(sys.argv) != 2:
         print(f"Usage: python {sys.argv[0]} <path_to_image>")
@@ -92,6 +88,7 @@ if __name__ == "__main__":
 
     classes = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
+    # turn outputs into JSON format for parsability
     out = dict(zip(classes,probs))
     json_data = json.dumps(out)
 

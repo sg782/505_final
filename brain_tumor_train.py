@@ -62,9 +62,12 @@ best_loss = math.inf
 for epoch in range(n_epochs):
     model.train()
     running_loss = 0.0
+
+    # each epoch requires us to go over all the images in teh training set
     for inputs, labels in train_loader:
         inputs, labels = inputs.to(device), labels.to(device)
 
+        # forward and backwards step through the model
         optimizer.zero_grad()
         outputs = model(inputs)
         loss = criterion(outputs, labels)
@@ -76,7 +79,7 @@ for epoch in range(n_epochs):
     print(f"Epoch {epoch+1}, Loss: {avg_loss}")
 
     #  Since we plan on using this model for our test, we save our highest quality model
-    
+    # every time the average loss is lower than a the previous best loss, we will save the the model
     if avg_loss < best_loss:
         best_loss = avg_loss
         torch.save(model.state_dict(), 'best_model_weights.pth')
